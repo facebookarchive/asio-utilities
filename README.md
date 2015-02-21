@@ -4,8 +4,8 @@ ASIO Utilities
 Installation
 ------------
 
-- add hhvm/asio-utilities to your composer.json
-- require vendor/hhvm/asio-utilities/init.php (autoload is not supported due to
+- add `hhvm/asio-utilities` to your composer.json
+- require `vendor/hhvm/asio-utilities/init.php` (autoload is not supported due to
   https://github.com/composer/composer/issues/3683)
 
 ResultOrExceptionWrapper
@@ -83,7 +83,7 @@ There are other small convenience functions:
   </tbody>
 </table>
 
-For reference, here is a full matrix of vector/map functions:
+For reference, here is a full matrix of vector/map functions (`v()` and `m()` are built in to HHVM 3.6 and newer):
 
 <table>
   <thead>
