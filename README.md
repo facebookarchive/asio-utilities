@@ -6,7 +6,7 @@ Installation
 
 - add hhvm/asio-utilities to your composer.json
 - require vendor/hhvm/asio-utilities/init.php (autoload is not supported due to
-  composer/composer#3683)
+  https://github.com/composer/composer/issues/3683)
 
 ResultOrExceptionWrapper
 ------------------------
