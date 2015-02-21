@@ -10,6 +10,20 @@
 namespace HH\Asio {
 
 /**
+ * Same as id(), but wrap result into ResultOrExceptionWrapper.
+ */
+async function wrap<Tv>(
+  Awaitable<Tv> $awaitable,
+): Awaitable<ResultOrExceptionWrapper<Tv>> {
+  try {
+    $result = await $awaitable;
+    return new WrappedResult($result);
+  } catch (\Exception $e) {
+    return new WrappedException($e);
+  }
+}
+
+/**
  * Wait until some later time in the future.
  */
 async function later(): Awaitable<void> {

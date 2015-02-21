@@ -15,6 +15,7 @@ When awaiting multiple handles, it can be useful to isolate exceptions from
 each; ResultOrExceptionWrapper provides this:
 
 ```Hack
+// HH\Asio\wrap(T): ResultOrExceptionWrapper<T>
 $w = wrap(some_async_function_that_may_throw());
 if ($w->isSucceeded()) {
   $result = $w->getResult();
@@ -56,31 +57,8 @@ This is also available without a filter or mapping operation - vw() and mw().
 Function List
 -------------
 
-All functions are in the HH\Asio namespace.
-
-There are other small convenience functions:
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>id()</td><td>Take an Awaitable and return it unmodified</td>
-    <tr>
-      <td>wrap()</td>
-      <td>Await an Awaitable and wrap it in a ResultOrExceptionWrapper</td>
-    </tr>
-    <tr>
-      <td>val()</td>
-      <td>A static value, yielded from an Awaitable immediately</td>
-    <tr/>
-  </tbody>
-</table>
-
-For reference, here is a full matrix of vector/map functions (`v()` and `m()` are built in to HHVM 3.6 and newer):
+All functions are in the HH\Asio namespace;
+`v()` and `m()` are built in to HHVM 3.6 and newer.
 
 <table>
   <thead>

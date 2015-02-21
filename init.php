@@ -12,6 +12,5 @@ require_once(__DIR__.'/ResultOrExceptionWrapper.php');
 require_once(__DIR__.'/WrappedException.php');
 require_once(__DIR__.'/src/WrappedResult.php');
 require_once(__DIR__.'/src/convenience.php');
-require_once(__DIR__.'/src/identities.php');
 require_once(__DIR__.'/src/maps.php');
 require_once(__DIR__.'/src/vectors.php');
