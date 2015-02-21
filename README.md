@@ -32,7 +32,7 @@ HHVM 3.6 and above include HH\Asio\v() and HH\Asio\m() to make it easy to wait
 on multiple wait handles; it's fairly common to want to combine this with
 another option, such as mapping or filtering with an async function.
 
-These functions are named according to a matric of their attributes:
+These functions are named according to their attributes:
 
 First, how they take and return arguments according to types:
  * v - Vector
@@ -43,9 +43,6 @@ Then, either one or two letters to indicate the operation:
  * f - filter with key
  * m - map
  * mk - map with keys
-
-Wrapped Functions
------------------
 
 Finally, there is optionally a trailing 'w' to indicate that you want
 a result or exception wrapper. For 'fw' functions, the behavior is that:
