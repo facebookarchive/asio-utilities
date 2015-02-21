@@ -31,21 +31,6 @@ async function wrap<Tv>(
 }
 
 /**
- * Invoke and then await. Useful only idiomatically for invoking async
- * lambdas
- *
- *  await va(
- *    gen_something(),
- *    call(async () ==> await something_else()),
- *  );
- */
-async function call<Tv>(
-  (function (): Awaitable<Tv>) $gen,
-): Awaitable<Tv> {
-  return await $gen();
-}
-
-/**
  * Await on a known value
  */
 async function val<T>(T $v): Awaitable<T> {

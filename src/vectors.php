@@ -9,81 +9,46 @@
 
 namespace HH\Asio {
 
+///// Mapped /////
+
 /**
- * Same as v(), but wrap results into ResultOrExceptionWrappers.
+ * Similar to Vector::map, but maps the values using awaitables
  */
-async function vw<Tv>(
-  Traversable<Awaitable<Tv>> $awaitables,
-): Awaitable<Vector<ResultOrExceptionWrapper<Tv>>> {
-  $wait_handles = Vector {};
-  $wait_handles->reserve(count($awaitables));
-  foreach ($awaitables as $awaitable) {
-    $wait_handles[] = wrap($awaitable)->getWaitHandle();
+async function vm<Tv, Tr>(
+  Traversable<Tv> $inputs,
+  (function (Tv): Awaitable<Tr>) $callable,
+): Awaitable<Vector<Tr>> {
+  $awaitables = Vector { };
+  foreach ($inputs as $input) {
+    $awaitables[] = $callable($input);
   }
-  await AwaitAllWaitHandle::fromVector($wait_handles);
-  // TODO: When systemlib supports closures
-  // return $wait_handles->map($o ==> $o->result());
-  $ret = Vector {};
-  foreach($wait_handles as $value) {
-    $ret[] = $value->result();
-  }
-  return $ret;
+  return await v($awaitables);
 }
 
 /**
- * Yield the vector of values created by
- * mapping each element of $keys through $gen and awaiting the results.
+ * Similar to vm(), but passes element keys as well
  */
-async function vc<Tk, Tv>(
-  (function (Tk): Awaitable<Tv>) $gen,
-  Traversable<Tk> $keys,
-): Awaitable<Vector<Tv>> {
-  $wait_handles = Vector {};
-  $wait_handles->reserve(count($keys));
-  foreach ($keys as $key) {
-    $wait_handles[] = $gen($key)->getWaitHandle();
+async function vmk<Tk, Tv, Tr>(
+  KeyedTraversable<Tk, Tv> $inputs,
+  (function (Tk, Tv): Awaitable<Tr>) $callable,
+): Awaitable<Vector<Tr>> {
+  $awaitables = Vector { };
+  foreach ($inputs as $k => $v) {
+    $awaitables[] = $callable($k, $v);
   }
-  await AwaitAllWaitHandle::fromVector($wait_handles);
-  // TODO: When systemlib supports closures
- // return $wait_handles->map($o ==> $o->result());
-  $ret = Vector {};
-  foreach($wait_handles as $value) {
-    $ret[] = $value->result();
-  }
-  return $ret;
+  return await v($awaitables);
 }
 
-/**
- * Same as vc(), but wrap results into ResultOrExceptionWrappers.
- */
-async function vcw<Tk, Tv>(
-  (function (Tk): Awaitable<Tv>) $gen,
-  Traversable<Tk> $keys,
-): Awaitable<Vector<ResultOrExceptionWrapper<Tv>>> {
-  $wait_handles = Vector {};
-  $wait_handles->reserve(count($keys));
-  foreach ($keys as $key) {
-    $wait_handles[] = wrap($gen($key))->getWaitHandle();
-  }
-  await AwaitAllWaitHandle::fromVector($wait_handles);
-  // TODO: When systemlib supports closures
-  // return $wait_handles->map($o ==> $o->result());
-  $ret = Vector {};
-  foreach($wait_handles as $value) {
-    $ret[] = $value->result();
-  }
-  return $ret;
-}
+///// Filtered /////
 
 /**
- * Vector version of mf()
+ * Apply an async filtering function, and return a Vector of outputs.
  */
-async function vf<T>(
-  \ConstVector<T> $inputs,
+async function vf<Tk, T>(
+  KeyedTraversable<Tk, T> $inputs,
   (function (T): Awaitable<bool>) $callable,
 ): Awaitable<Vector<T>> {
-  $gens = $inputs->map($callable);
-  $tests = await v($gens);
+  $tests = await mm($inputs, $callable);
   $results = Vector {};
   foreach ($inputs as $key => $value) {
     if ($tests[$key]) {
@@ -96,12 +61,11 @@ async function vf<T>(
 /**
  * Similar to vf(), but passes element keys as well
  */
-async function vfk<T>(
-  \ConstVector<T> $inputs,
-  (function (int, T): Awaitable<bool>) $callable,
+async function vfk<Tk, T>(
+  KeyedTraversable<Tk, T> $inputs,
+  (function (Tk, T): Awaitable<bool>) $callable,
 ): Awaitable<Vector<T>> {
-  $gens = $inputs->mapWithKey($callable);
-  $tests = await v($gens);
+  $tests = await mmk($inputs, $callable);
   $results = Vector {};
   foreach ($inputs as $key => $value) {
     if ($tests[$key]) {
@@ -111,24 +75,93 @@ async function vfk<T>(
   return $results;
 }
 
+////////////////////
+////// Wrapped /////
+////////////////////
+
 /**
- * Similar to Vector::map, but maps the values using awaitables
+ * Same as v(), but wrap results into ResultOrExceptionWrappers.
  */
-async function vm<Tv, Tr>(
-  \ConstVector<Tv> $inputs,
+async function vw<Tv>(
+  Traversable<Awaitable<Tv>> $awaitables,
+): Awaitable<Vector<ResultOrExceptionWrapper<Tv>>> {
+  return await vm(
+    $awaitables,
+    async $x ==> await wrap($x),
+  );
+}
+
+///// Mapped /////
+
+/**
+ * Like vm(), except using a ResultOrExceptionWrapper.
+ */
+async function vmw<Tv, Tr>(
+  Traversable<Tv> $inputs,
   (function (Tv): Awaitable<Tr>) $callable,
-): Awaitable<Vector<Tr>> {
-  return await v($inputs->map($callable));
+): Awaitable<Vector<ResultOrExceptionWrapper<Tr>>> {
+  return await vm(
+    $inputs,
+    async $x ==> await wrap($callable($x)),
+  );
 }
 
 /**
- * Similar to vm(), but passes element keys as well
+ * Like vmk(), except using a ResultOrExceptionWrapper.
  */
-async function vmk<Tv, Tr>(
-  \ConstVector<Tv> $inputs,
-  (function (int, Tv): Awaitable<Tr>) $callable,
-): Awaitable<Vector<Tr>> {
-  return await v($inputs->mapWithKey($callable));
+async function vmkw<Tk, Tv, Tr>(
+  KeyedTraversable<Tk, Tv> $inputs,
+  (function (Tk, Tv): Awaitable<Tr>) $callable,
+): Awaitable<Vector<ResultOrExceptionWrapper<Tr>>> {
+  return await vmk(
+    $inputs,
+    async ($k, $v) ==> await wrap($callable($k, $v)),
+  );
+}
+
+///// Filtered /////
+
+/**
+ * Like vf(), except using a ResultOrExceptionWrapper.
+ */
+async function vfw<Tk,T>(
+  KeyedTraversable<Tk, T> $inputs,
+  (function (T): Awaitable<bool>) $callable,
+): Awaitable<Vector<ResultOrExceptionWrapper<T>>> {
+  $tests = await mm($inputs, async $x ==> await wrap($callable($x)));
+  $results = Vector {};
+  foreach ($inputs as $key => $value) {
+    $test = $tests[$key];
+    if ($test->isFailed()) {
+      $results[] = new WrappedException($test->getException());
+    } else if ($test->getResult() === true) {
+      $results[] = new WrappedResult($value);
+    }
+  }
+  return $results;
+}
+
+/**
+ * Like vfk(), except using a ResultOrExceptionWrapper.
+ */
+async function vfkw<Tk, T>(
+  KeyedTraversable<Tk, T> $inputs,
+  (function (Tk, T): Awaitable<bool>) $callable,
+): Awaitable<Vector<ResultOrExceptionWrapper<T>>> {
+  $tests = await mmk(
+    $inputs,
+    async ($k, $v) ==> await wrap($callable($k, $v)),
+  );
+  $results = Vector {};
+  foreach ($inputs as $key => $value) {
+    $test = $tests[$key];
+    if ($test->isFailed()) {
+      $results[] = new WrappedException($test->getException());
+    } else if ($test->getResult() === true) {
+      $results[] = new WrappedResult($value);
+    }
+  }
+  return $results;
 }
 
 } // namespace HH\Asio

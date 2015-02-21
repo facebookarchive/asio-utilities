@@ -9,78 +9,46 @@
 
 namespace HH\Asio {
 
+///// Mapped /////
+
 /**
- * Same as m(), but wrap results into ResultOrExceptionWrappers.
+ * Similar to Map::map, but maps the values using awaitables
  */
-async function mw<Tk, Tv>(
-  KeyedTraversable<Tk, Awaitable<Tv>> $awaitables,
-): Awaitable<Map<Tk, ResultOrExceptionWrapper<Tv>>> {
-  $wait_handles = Map {};
-  foreach ($awaitables as $index => $awaitable) {
-    $wait_handles[$index] = wrap($awaitable)->getWaitHandle();
+async function mm<Tk, Tv, Tr>(
+  KeyedTraversable<Tk, Tv> $inputs,
+  (function (Tv): Awaitable<Tr>) $callable,
+): Awaitable<Map<Tk, Tr>> {
+  $awaitables = Map { };
+  foreach ($inputs as $k => $v) {
+    $awaitables[$k] = $callable($v);
   }
-  await AwaitAllWaitHandle::fromMap($wait_handles);
-  // TODO: When systemlib supports closures
-  // return $wait_handles->map($o ==> $o->result());
-  $ret = Map {};
-  foreach($wait_handles as $key => $value) {
-    $ret[$key] = $value->result();
-  }
-  return $ret;
+  return await m($awaitables);
 }
 
 /**
- * Yield a map of values indexed by key for a given vector of keys.
+ * Similar to mm(), but passes element keys as well
  */
-async function mc<Tk, Tv>(
-  (function (Tk): Awaitable<Tv>) $gen,
-  Traversable<Tk> $keys,
-): Awaitable<Map<Tk, Tv>> {
-  $gens = Map {};
-  foreach ($keys as $key) {
-    $gens[$key] = $gen($key)->getWaitHandle();
+async function mmk<Tk, Tv, Tr>(
+  KeyedTraversable<Tk, Tv> $inputs,
+  (function (Tk, Tv): Awaitable<Tr>) $callable,
+): Awaitable<Map<Tk, Tr>> {
+  $awaitables = Map { };
+  foreach ($inputs as $k => $v) {
+    $awaitables[$k] = $callable($k, $v);
   }
-  await AwaitAllWaitHandle::fromMap($gens);
-  // TODO: When systemlib supports closures
-  // return $gens->map($o ==> $o->result());
-  $ret = Map {};
-  foreach($gens as $key => $value) {
-    $ret[$key] = $value->result();
-  }
-  return $ret;
+  return await m($awaitables);
 }
 
-
-/**
- * Same as mc(), but wrap results into ResultOrExceptionWrappers.
- */
-async function mcw<Tk, Tv>(
-  (function (Tk): Awaitable<Tv>) $gen,
-  Traversable<Tk> $keys,
-): Awaitable<Map<Tk, ResultOrExceptionWrapper<Tv>>> {
-  $gens = Map {};
-  foreach ($keys as $key) {
-    $gens[$key] = wrap($gen($key))->getWaitHandle();
-  }
-  await AwaitAllWaitHandle::fromMap($gens);
-  // TODO: When systemlib supports closures
-  // return $gens->map($o ==> $o->result());
-  $ret = Map {};
-  foreach($gens as $key => $value) {
-    $ret[$key] = $value->result();
-  }
-  return $ret;
-}
+///// Filtered /////
 
 /**
  * Filter a Map with an Awaitable callback
  */
 async function mf<Tk, Tv>(
-  \ConstMap<Tk, Tv> $inputs,
+  KeyedTraversable<Tk, Tv> $inputs,
   (function (Tv): Awaitable<bool>) $callable,
 ): Awaitable<Map<Tk, Tv>> {
-  $gens = $inputs->map($callable);
-  $tests = await m($gens);
+  $tests = await mm($inputs, $callable);
   $results = Map {};
   foreach ($inputs as $key => $value) {
     if ($tests[$key]) {
@@ -95,11 +63,10 @@ async function mf<Tk, Tv>(
  * Similar to mfk(), but passes element keys as well
  */
 async function mfk<Tk, Tv>(
-  \ConstMap<Tk, Tv> $inputs,
+  KeyedTraversable<Tk, Tv> $inputs,
   (function (Tk, Tv): Awaitable<bool>) $callable,
 ): Awaitable<Map<Tk, Tv>> {
-  $gens = $inputs->mapWithKey($callable);
-  $tests = await m($gens);
+  $tests = await mmk($inputs, $callable);
   $results = Map {};
   foreach ($inputs as $key => $value) {
     if ($tests[$key]) {
@@ -110,24 +77,93 @@ async function mfk<Tk, Tv>(
   return $results;
 }
 
+////////////////////
+////// Wrapped /////
+////////////////////
+
 /**
- * Similar to Map::map, but maps the values using awaitables
+ * Same as m(), but wrap results into ResultOrExceptionWrappers.
  */
-async function mm<Tk, Tv, Tr>(
-  \ConstMap<Tk, Tv> $inputs,
+async function mw<Tk, Tv>(
+  KeyedTraversable<Tk, Awaitable<Tv>> $awaitables,
+): Awaitable<Map<Tk, ResultOrExceptionWrapper<Tv>>> {
+  return await mm(
+    $awaitables,
+    async $x ==> await wrap($x),
+  );
+}
+
+///// Mapped /////
+
+/**
+ * Like mm(), except using a ResultOrExceptionWrapper.
+ */
+async function mmw<Tk, Tv, Tr>(
+  KeyedTraversable<Tk, Tv> $inputs,
   (function (Tv): Awaitable<Tr>) $callable,
-): Awaitable<Map<Tk, Tr>> {
-  return await m($inputs->map($callable));
+): Awaitable<Map<Tk, ResultOrExceptionWrapper<Tr>>> {
+  return await mm(
+    $inputs,
+    async $x ==> await wrap($callable($x)),
+  );
 }
 
 /**
- * Similar to mm(), but passes element keys as well
+ * Like mmk(), except using a ResultOrExceptionWrapper.
  */
-async function mmk<Tk, Tv, Tr>(
-  \ConstMap<Tk, Tv> $inputs,
+async function mmkw<Tk, Tv, Tr>(
+  KeyedTraversable<Tk, Tv> $inputs,
   (function (Tk, Tv): Awaitable<Tr>) $callable,
-): Awaitable<Map<Tk, Tr>> {
-  return await m($inputs->mapWithKey($callable));
+): Awaitable<Map<Tk, ResultOrExceptionWrapper<Tr>>> {
+  return await mmk(
+    $inputs,
+    async ($k, $v) ==> await wrap($callable($k, $v)),
+  );
+}
+
+///// Filtered /////
+
+/**
+ * Like mf(), except using a ResultOrExceptionWrapper.
+ */
+async function mfw<Tk,T>(
+  KeyedTraversable<Tk, T> $inputs,
+  (function (T): Awaitable<bool>) $callable,
+): Awaitable<Map<Tk, ResultOrExceptionWrapper<T>>> {
+  $tests = await mm($inputs, async $x ==> await wrap($callable($x)));
+  $results = Map {};
+  foreach ($inputs as $key => $value) {
+    $test = $tests[$key];
+    if ($test->isFailed()) {
+      $results[$key] = new WrappedException($test->getException());
+    } else if ($test->getResult() === true) {
+      $results[$key] = new WrappedResult($value);
+    }
+  }
+  return $results;
+}
+
+/**
+ * Like mfk(), except using a ResultOrExceptionWrapper.
+ */
+async function mfkw<Tk, T>(
+  KeyedTraversable<Tk, T> $inputs,
+  (function (Tk, T): Awaitable<bool>) $callable,
+): Awaitable<Map<Tk, ResultOrExceptionWrapper<T>>> {
+  $tests = await mmk(
+    $inputs,
+    async ($k, $v) ==> await wrap($callable($k, $v)),
+  );
+  $results = Map {};
+  foreach ($inputs as $key => $value) {
+    $test = $tests[$key];
+    if ($test->isFailed()) {
+      $results[$key] = new WrappedException($test->getException());
+    } else if ($test->getResult() === true) {
+      $results[$key] = new WrappedResult($value);
+    }
+  }
+  return $results;
 }
 
 } // namespace HH\Asio
