@@ -71,10 +71,29 @@ This is also available without a filter or mapping operation - vw() and mw().
 Function List
 -------------
 
-|Function|Description              |Input            |Output      |Callback                             |
-|--------|-------------------------|-----------------|------------|-------------------------------------|
-| v()    | Wait for all            | Traversable<T>  | Vector<T>  |                                     |
-| vm()   | Map with async function | Traversable<Tv> | Vector<Tr> | function<Tv, Tr>(Tv): Awaitable<Tr> |
-|--------|-------------------------|-----------------|------------|-------------------------------------|
-| vw()   | Wait for all            | Traversable<T>  | Vector<ResultOrExceptionWrapper<T> |             |
-|--------|-------------------------|-----------------|------------|-------------------------------------|
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Input</th>
+      <th>Output</th>
+      <th>Callback</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>v()</td>
+      <td>Wait for all</td>
+      <td>Traversable&lt;T&gt;</td>
+      <td>Vector&lt;T&gt;</td>
+    </tr>
+    <tr>
+      <td>vm()</td>
+      <td>Map with async function</td>
+      <td>Traversable&lt;Tv&gt;</td>
+      <td>Vector&lt;Tr&gt;</td>
+      <td>function(Tv): Awaitable&lt;Tr&gt;</tr>
+    </tr>
+  </tbody>
+</table>
