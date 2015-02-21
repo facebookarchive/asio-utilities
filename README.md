@@ -53,6 +53,7 @@ First, how they take and return arguments according to types:
 
 Then, either one or two letters to indicate the operation:
  * f - filter
+ * f - filter with key
  * m - map
  * mk - map with keys
 
@@ -75,25 +76,104 @@ Function List
   <thead>
     <tr>
       <th>Name</th>
-      <th>Description</th>
-      <th>Input</th>
-      <th>Output</th>
+      <th>Returns</th>
+      <th>Mapped</th>
+      <th>Filtered</th>
+      <th>with key</th>
+      <th>Wrapped</th>
       <th>Callback</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>v()</td>
-      <td>Wait for all</td>
-      <td>Traversable&lt;T&gt;</td>
       <td>Vector&lt;T&gt;</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td>:x:</td>
     </tr>
     <tr>
       <td>vm()</td>
-      <td>Map with async function</td>
-      <td>Traversable&lt;Tv&gt;</td>
       <td>Vector&lt;Tr&gt;</td>
-      <td>function(Tv): Awaitable&lt;Tr&gt;</tr>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td><code>function(Tv): Awaitable&lt;Tr&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>vmk()</td>
+      <td>Vector&lt;Tr&gt;</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td><code>function(Tk, Tv): Awaitable&lt;Tr&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>vf()</td>
+      <td>Vector&lt;Tv&gt;</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td><code>function(Tv): Awaitable&lt;bool&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>vfk()</td>
+      <td>Vector&lt;Tv&gt;</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td><code>function(Tk, Tv): Awaitable&lt;bool&gt;</code></tr>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>vw()</td>
+      <td>Vector&lt;ResultOrExceptionWaitHandle&lt;T&gt;&gt;</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+    </tr>
+    <tr>
+      <td>vmw()</td>
+      <td>Vector&lt;ResultOrExceptionWaitHandle&lt;Tr&gt;&gt;</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td><code>function(Tv): Awaitable&lt;Tr&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>vmkw()</td>
+      <td>Vector&lt;ResultOrExceptionWaitHandle&lt;Tr&gt;&gt;</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td>:white_check_mark:</td>
+      <td><code>function(Tk, Tv): Awaitable&lt;Tr&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>vfw()</td>
+      <td>Vector&lt;ResultOrExceptionWaitHandle&lt;Tv&gt;&gt;</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td><code>function(Tv): Awaitable&lt;bool&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>vfkw()</td>
+      <td>Vector&lt;ResultOrExceptionWaitHandle&lt;Tv&gt;&gt;</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td>:white_check_mark:</td>
+      <td>:white_check_mark:</td>
+      <td><code>function(Tk, Tv): Awaitable&lt;bool&gt;</code></tr>
     </tr>
   </tbody>
 </table>
