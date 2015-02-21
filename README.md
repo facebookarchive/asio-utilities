@@ -25,19 +25,6 @@ if ($w->isSucceeded()) {
 }
 ```
 
-Identities
-----------
-
- * id() - Take an Awaitable and return it unmodified
- * wrap() - Await an Awaitable and wrap it in a ResultOrExceptionWrapper
- * val() - A static value, yielded from an Awaitable immediately
-
-Convenience
------------
-
- * later() - Empty Awaitable which will schedule at lower priority
- * usleep() - Empty Awaitable which will yield in $usecs microseconds
-
 Mapping and Filtering Functions
 -------------------------------
 
@@ -71,6 +58,32 @@ This is also available without a filter or mapping operation - vw() and mw().
 
 Function List
 -------------
+
+All functions are in the HH\Asio namespace.
+
+There are other small convenience functions:
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>id()</td><td>Take an Awaitable and return it unmodified</td>
+    <tr>
+      <td>wrap()</td>
+      <td>Await an Awaitable and wrap it in a ResultOrExceptionWrapper</td>
+    </tr>
+    <tr>
+      <td>val()</td>
+      <td>A static value, yielded from an Awaitable immediately</td>
+    <tr/>
+  </tbody>
+</table>
+
+For reference, here is a full matrix of vector/map functions:
 
 <table>
   <thead>
