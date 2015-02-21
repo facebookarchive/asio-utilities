@@ -173,5 +173,93 @@ Function List
       <td>:white_check_mark:</td>
       <td><code>(Tk, Tv): Awaitable&lt;bool&gt;</code></tr>
     </tr>
+    <tr>
+      <td>m()</td>
+      <td>Map&lt;Tk, Tv&gt;</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+    </tr>
+    <tr>
+      <td>mm()</td>
+      <td>Map&lt;Tk, Tr&gt;</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td><code>(Tv): Awaitable&lt;Tr&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>mmk()</td>
+      <td>Map&lt;Tk, Tr&gt;</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td><code>(Tk, Tv): Awaitable&lt;Tr&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>mf()</td>
+      <td>Map&lt;Tk, Tv&gt;</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td><code>(Tv): Awaitable&lt;bool&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>mfk()</td>
+      <td>Map&lt;Tk, Tv&gt;</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td><code>(Tk, Tv): Awaitable&lt;bool&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>mw()</td>
+      <td>Map&lt;Tk, ResultOrExceptionWaitHandle&lt;T&gt;&gt;</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+    </tr>
+    <tr>
+      <td>mmw()</td>
+      <td>Map&lt;Tk, ResultOrExceptionWaitHandle&lt;Tr&gt;&gt;</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td><code>(Tv): Awaitable&lt;Tr&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>mmkw()</td>
+      <td>Map&lt;Tk, ResultOrExceptionWaitHandle&lt;Tr&gt;&gt;</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td>:white_check_mark:</td>
+      <td><code>(Tk, Tv): Awaitable&lt;Tr&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>mfw()</td>
+      <td>Map&lt;Tk, ResultOrExceptionWaitHandle&lt;Tv&gt;&gt;</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td><code>(Tv): Awaitable&lt;bool&gt;</code></tr>
+    </tr>
+    <tr>
+      <td>mfkw()</td>
+      <td>Map&lt;Tk, ResultOrExceptionWaitHandle&lt;Tv&gt;&gt;</td>
+      <td>:x:</td>
+      <td>:white_check_mark:</td>
+      <td>:white_check_mark:</td>
+      <td>:white_check_mark:</td>
+      <td><code>(Tk, Tv): Awaitable&lt;bool&gt;</code></tr>
+    </tr>
   </tbody>
 </table>
