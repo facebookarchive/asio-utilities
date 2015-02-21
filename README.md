@@ -131,7 +131,7 @@ Function List
     </tr>
     <tr>
       <td>vw()</td>
-      <td>Vector&lt;ResultOrExceptionWaitHandle&lt;T&gt;&gt;</td>
+      <td>Vector&lt;ResultOrExceptionWrapper&lt;T&gt;&gt;</td>
       <td>:x:</td>
       <td>:x:</td>
       <td>:x:</td>
@@ -139,7 +139,7 @@ Function List
     </tr>
     <tr>
       <td>vmw()</td>
-      <td>Vector&lt;ResultOrExceptionWaitHandle&lt;Tr&gt;&gt;</td>
+      <td>Vector&lt;ResultOrExceptionWrapper&lt;Tr&gt;&gt;</td>
       <td>:white_check_mark:</td>
       <td>:x:</td>
       <td>:x:</td>
@@ -148,7 +148,7 @@ Function List
     </tr>
     <tr>
       <td>vmkw()</td>
-      <td>Vector&lt;ResultOrExceptionWaitHandle&lt;Tr&gt;&gt;</td>
+      <td>Vector&lt;ResultOrExceptionWrapper&lt;Tr&gt;&gt;</td>
       <td>:white_check_mark:</td>
       <td>:x:</td>
       <td>:white_check_mark:</td>
@@ -157,7 +157,7 @@ Function List
     </tr>
     <tr>
       <td>vfw()</td>
-      <td>Vector&lt;ResultOrExceptionWaitHandle&lt;Tv&gt;&gt;</td>
+      <td>Vector&lt;ResultOrExceptionWrapper&lt;Tv&gt;&gt;</td>
       <td>:x:</td>
       <td>:white_check_mark:</td>
       <td>:x:</td>
@@ -166,7 +166,7 @@ Function List
     </tr>
     <tr>
       <td>vfkw()</td>
-      <td>Vector&lt;ResultOrExceptionWaitHandle&lt;Tv&gt;&gt;</td>
+      <td>Vector&lt;ResultOrExceptionWrapper&lt;Tv&gt;&gt;</td>
       <td>:x:</td>
       <td>:white_check_mark:</td>
       <td>:white_check_mark:</td>
@@ -219,7 +219,7 @@ Function List
     </tr>
     <tr>
       <td>mw()</td>
-      <td>Map&lt;Tk, ResultOrExceptionWaitHandle&lt;T&gt;&gt;</td>
+      <td>Map&lt;Tk, ResultOrExceptionWrapper&lt;T&gt;&gt;</td>
       <td>:x:</td>
       <td>:x:</td>
       <td>:x:</td>
@@ -227,7 +227,7 @@ Function List
     </tr>
     <tr>
       <td>mmw()</td>
-      <td>Map&lt;Tk, ResultOrExceptionWaitHandle&lt;Tr&gt;&gt;</td>
+      <td>Map&lt;Tk, ResultOrExceptionWrapper&lt;Tr&gt;&gt;</td>
       <td>:white_check_mark:</td>
       <td>:x:</td>
       <td>:x:</td>
@@ -236,7 +236,7 @@ Function List
     </tr>
     <tr>
       <td>mmkw()</td>
-      <td>Map&lt;Tk, ResultOrExceptionWaitHandle&lt;Tr&gt;&gt;</td>
+      <td>Map&lt;Tk, ResultOrExceptionWrapper&lt;Tr&gt;&gt;</td>
       <td>:white_check_mark:</td>
       <td>:x:</td>
       <td>:white_check_mark:</td>
@@ -245,7 +245,7 @@ Function List
     </tr>
     <tr>
       <td>mfw()</td>
-      <td>Map&lt;Tk, ResultOrExceptionWaitHandle&lt;Tv&gt;&gt;</td>
+      <td>Map&lt;Tk, ResultOrExceptionWrapper&lt;Tv&gt;&gt;</td>
       <td>:x:</td>
       <td>:white_check_mark:</td>
       <td>:x:</td>
@@ -254,7 +254,7 @@ Function List
     </tr>
     <tr>
       <td>mfkw()</td>
-      <td>Map&lt;Tk, ResultOrExceptionWaitHandle&lt;Tv&gt;&gt;</td>
+      <td>Map&lt;Tk, ResultOrExceptionWrapper&lt;Tv&gt;&gt;</td>
       <td>:x:</td>
       <td>:white_check_mark:</td>
       <td>:white_check_mark:</td>
