@@ -100,7 +100,7 @@ Function List
       <td>:x:</td>
       <td>:x:</td>
       <td>:x:</td>
-      <td><code>function(Tv): Awaitable&lt;Tr&gt;</code></tr>
+      <td><code>(Tv): Awaitable&lt;Tr&gt;</code></tr>
     </tr>
     <tr>
       <td>vmk()</td>
@@ -109,7 +109,7 @@ Function List
       <td>:x:</td>
       <td>:white_check_mark:</td>
       <td>:x:</td>
-      <td><code>function(Tk, Tv): Awaitable&lt;Tr&gt;</code></tr>
+      <td><code>(Tk, Tv): Awaitable&lt;Tr&gt;</code></tr>
     </tr>
     <tr>
       <td>vf()</td>
@@ -118,7 +118,7 @@ Function List
       <td>:white_check_mark:</td>
       <td>:x:</td>
       <td>:x:</td>
-      <td><code>function(Tv): Awaitable&lt;bool&gt;</code></tr>
+      <td><code>(Tv): Awaitable&lt;bool&gt;</code></tr>
     </tr>
     <tr>
       <td>vfk()</td>
@@ -127,10 +127,8 @@ Function List
       <td>:white_check_mark:</td>
       <td>:white_check_mark:</td>
       <td>:x:</td>
-      <td><code>function(Tk, Tv): Awaitable&lt;bool&gt;</code></tr>
+      <td><code>(Tk, Tv): Awaitable&lt;bool&gt;</code></tr>
     </tr>
-  </tbody>
-  <tbody>
     <tr>
       <td>vw()</td>
       <td>Vector&lt;ResultOrExceptionWaitHandle&lt;T&gt;&gt;</td>
@@ -146,7 +144,7 @@ Function List
       <td>:x:</td>
       <td>:x:</td>
       <td>:white_check_mark:</td>
-      <td><code>function(Tv): Awaitable&lt;Tr&gt;</code></tr>
+      <td><code>(Tv): Awaitable&lt;Tr&gt;</code></tr>
     </tr>
     <tr>
       <td>vmkw()</td>
@@ -155,7 +153,7 @@ Function List
       <td>:x:</td>
       <td>:white_check_mark:</td>
       <td>:white_check_mark:</td>
-      <td><code>function(Tk, Tv): Awaitable&lt;Tr&gt;</code></tr>
+      <td><code>(Tk, Tv): Awaitable&lt;Tr&gt;</code></tr>
     </tr>
     <tr>
       <td>vfw()</td>
@@ -164,7 +162,7 @@ Function List
       <td>:white_check_mark:</td>
       <td>:x:</td>
       <td>:white_check_mark:</td>
-      <td><code>function(Tv): Awaitable&lt;bool&gt;</code></tr>
+      <td><code>(Tv): Awaitable&lt;bool&gt;</code></tr>
     </tr>
     <tr>
       <td>vfkw()</td>
@@ -173,7 +171,7 @@ Function List
       <td>:white_check_mark:</td>
       <td>:white_check_mark:</td>
       <td>:white_check_mark:</td>
-      <td><code>function(Tk, Tv): Awaitable&lt;bool&gt;</code></tr>
+      <td><code>(Tk, Tv): Awaitable&lt;bool&gt;</code></tr>
     </tr>
   </tbody>
 </table>
