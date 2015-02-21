@@ -1,11 +1,18 @@
 ASIO Utilities
 ==============
 
+Installation
+------------
+
+- add hhvm/asio-utilities to your composer.json
+- require vendor/hhvm/asio-utilities/init.php (autoload is not supported due to
+  composer/composer#3683)
+
 ResultOrExceptionWrapper
 ------------------------
 
-When awaiting multiple handles, it can be useful to isolate exceptions from each;
-ResultOrExceptionWrapper provides this:
+When awaiting multiple handles, it can be useful to isolate exceptions from
+each; ResultOrExceptionWrapper provides this:
 
 ```Hack
 $w = wrap(some_async_function_that_may_throw());
