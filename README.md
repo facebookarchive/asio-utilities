@@ -41,7 +41,7 @@ First, how they take and return arguments according to types:
 
 Then, either one or two letters to indicate the operation:
  * f - filter
- * f - filter with key
+ * fk - filter with key
  * m - map
  * mk - map with keys
 
