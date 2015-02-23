@@ -10,7 +10,7 @@
 namespace HH\Asio {
 
 /**
- * Same as id(), but wrap result into ResultOrExceptionWrapper.
+ * Wrap an Awaitable into a ResultOrExceptionWrapper.
  */
 async function wrap<Tv>(
   Awaitable<Tv> $awaitable,
