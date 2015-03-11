@@ -1,6 +1,6 @@
 {
-  "name": "hhvm/asio-utilties",
-  "description": "Utilties to make working with async functions easier",
+  "name": "hhvm/asio-utilities",
+  "description": "Utilities to make working with async functions easier",
   "keywords": ["facebook", "hhvm", "hack", "async", "asio"],
   "homepage": "https://github.com/hhvm/asio-utilities",
   "license": ["BSD-3-Clause"]
