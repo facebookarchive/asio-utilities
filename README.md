@@ -13,8 +13,8 @@ When awaiting multiple handles, it can be useful to isolate exceptions from
 each; ResultOrExceptionWrapper provides this:
 
 ```Hack
-// HH\Asio\wrap(T): ResultOrExceptionWrapper<T>
-$w = wrap(some_async_function_that_may_throw());
+// HH\Asio\wrap(T): Awaitable<ResultOrExceptionWrapper<T>>
+$w = await wrap(some_async_function_that_may_throw());
 if ($w->isSucceeded()) {
   $result = $w->getResult();
   ...
