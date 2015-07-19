@@ -4,6 +4,9 @@
   "keywords": ["facebook", "hhvm", "hack", "async", "asio"],
   "homepage": "https://github.com/hhvm/asio-utilities",
   "license": ["BSD-3-Clause"],
+  "require": {
+    "hhvm": ">=3.6,<3.8"
+  },
   "autoload": {
     "files": [
       "src/convenience.php",
