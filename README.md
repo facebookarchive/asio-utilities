@@ -1,6 +1,11 @@
 ASIO Utilities
 ==============
 
+Obsolete In HHVM 3.11+
+----------------------
+
+These functions have been merged into HHVM, and we expected them to be included from 3.11.0 onwards.
+
 Installation
 ------------
 
