@@ -5,16 +5,6 @@
   "homepage": "https://github.com/hhvm/asio-utilities",
   "license": ["BSD-3-Clause"],
   "require": {
-    "hhvm": "~3.8.0 | ~3.9.0 | ~3.10.0 | 3.11-dev"
-  },
-  "autoload": {
-    "files": [
-      "src/convenience.php",
-      "src/maps.php",
-      "src/vectors.php",
-      "src/ResultOrExceptionWrapper.php",
-      "src/WrappedException.php",
-      "src/WrappedResult.php"
-    ]
+    "hhvm": "~3.11.0 | ~3.12.0"
   }
 }
